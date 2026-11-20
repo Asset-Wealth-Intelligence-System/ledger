@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class WidgetWalletBalancesComponent extends Component {
+    @service intl;
     @service fetch;
     @service currentUser;
     @service ledgerDashboard;
@@ -31,7 +32,7 @@ export default class WidgetWalletBalancesComponent extends Component {
         } catch (error) {
             this.totals = null;
             this.topWallets = [];
-            this.error = error?.message ?? 'Unable to load wallet balances';
+            this.error = error?.message ?? this.intl.t('literal.ledger.unable-to-load-wallet-balances');
         }
     }
 

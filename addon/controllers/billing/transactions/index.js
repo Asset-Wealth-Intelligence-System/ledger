@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class BillingTransactionsIndexController extends Controller {
+    @service intl;
     @service hostRouter;
 
     queryParams = ['page', 'limit', 'sort', 'query', 'status'];
@@ -16,14 +17,16 @@ export default class BillingTransactionsIndexController extends Controller {
     @tracked status = null;
     @tracked table = null;
 
-    columns = [
-        { label: 'Date', valuePath: 'created_at', width: '140px', sortable: true, component: 'table/cell/date' },
-        { label: 'Reference', valuePath: 'gateway_transaction_id', width: '200px' },
-        { label: 'Gateway', valuePath: 'gateway_code', width: '120px' },
-        { label: 'Customer', valuePath: 'customer_name', width: '160px' },
-        { label: 'Amount', valuePath: 'formatted_amount', width: '120px', sortable: true },
-        { label: 'Status', valuePath: 'status', width: '100px', component: 'table/cell/status' },
+    get columns() {
+        return [
+        { label: this.intl.t('literal.ledger.date'), valuePath: 'created_at', width: '140px', sortable: true, component: 'table/cell/date' },
+        { label: this.intl.t('literal.ledger.reference-63d50'), valuePath: 'gateway_transaction_id', width: '200px' },
+        { label: this.intl.t('literal.ledger.gateway'), valuePath: 'gateway_code', width: '120px' },
+        { label: this.intl.t('literal.ledger.customer'), valuePath: 'customer_name', width: '160px' },
+        { label: this.intl.t('literal.ledger.amount'), valuePath: 'formatted_amount', width: '120px', sortable: true },
+        { label: this.intl.t('literal.ledger.status'), valuePath: 'status', width: '100px', component: 'table/cell/status' },
     ];
+    }
 
     get actionButtons() {
         return [];

@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class WidgetArAgingSummaryComponent extends Component {
+    @service intl;
     @service fetch;
     @service ledgerDashboard;
 
@@ -38,7 +39,7 @@ export default class WidgetArAgingSummaryComponent extends Component {
             this.data = response?.data ?? response;
             this.error = null;
         } catch (error) {
-            this.error = error?.message ?? 'Unable to load AR aging';
+            this.error = error?.message ?? this.intl.t('literal.ledger.unable-to-load-ar-aging');
         }
     }
 

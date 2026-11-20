@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class WidgetInvoiceStatusComponent extends Component {
+    @service intl;
     @service fetch;
 
     @tracked data = null;
@@ -39,7 +40,7 @@ export default class WidgetInvoiceStatusComponent extends Component {
             this.data = response?.data ?? response;
             this.error = null;
         } catch (error) {
-            this.error = error?.message ?? 'Unable to load invoice status';
+            this.error = error?.message ?? this.intl.t('literal.ledger.unable-to-load-invoice-status');
         }
     }
 }

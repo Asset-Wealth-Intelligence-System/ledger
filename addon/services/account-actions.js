@@ -14,7 +14,8 @@ export default class AccountActionsService extends ResourceActionService {
         create: () => this.transitionTo('accounting.accounts.index.new'),
     };
 
-    panel = {
+    get panel() {
+        return {
         create: (attributes = {}, options = {}) => {
             const account = this.createNewInstance(attributes);
             return this.resourceContextPanel.open({
@@ -45,4 +46,5 @@ export default class AccountActionsService extends ResourceActionService {
             });
         },
     };
+    }
 }

@@ -14,7 +14,8 @@ export default class JournalActionsService extends ResourceActionService {
         create: () => this.transitionTo('accounting.journal.index.new'),
     };
 
-    panel = {
+    get panel() {
+        return {
         create: (attributes = {}, options = {}) => {
             const journal = this.createNewInstance(attributes);
             return this.resourceContextPanel.open({
@@ -35,4 +36,5 @@ export default class JournalActionsService extends ResourceActionService {
             });
         },
     };
+    }
 }

@@ -5,6 +5,7 @@ import { task } from 'ember-concurrency';
 import formatCurrency from '@fleetbase/ember-ui/utils/format-currency';
 
 export default class WidgetCashFlowSummaryComponent extends Component {
+    @service intl;
     @service fetch;
     @service ledgerDashboard;
 
@@ -28,7 +29,7 @@ export default class WidgetCashFlowSummaryComponent extends Component {
     get datasets() {
         return [
             {
-                label: 'Net cash flow',
+                label: this.intl.t('literal.ledger.net-cash-flow'),
                 data: [this.data?.operating ?? 0, this.data?.financing ?? 0, this.data?.investing ?? 0],
                 backgroundColor: ['rgba(5, 150, 105, 0.72)', 'rgba(59, 130, 246, 0.72)', 'rgba(245, 158, 11, 0.72)'],
                 borderColor: ['#059669', '#2563eb', '#d97706'],
@@ -55,7 +56,7 @@ export default class WidgetCashFlowSummaryComponent extends Component {
             this.data = response?.data ?? response;
             this.error = null;
         } catch (error) {
-            this.error = error?.message ?? 'Unable to load cash flow';
+            this.error = error?.message ?? this.intl.t('literal.ledger.unable-to-load-cash-flow');
         }
     }
 

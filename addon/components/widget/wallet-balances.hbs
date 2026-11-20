@@ -1,8 +1,8 @@
 <div class="ledger-dashboard-widget flex h-full flex-col rounded-md border bg-white shadow-sm dark:bg-gray-800" ...attributes>
     <div class="ledger-widget-header">
         <div class="min-w-0">
-            <div class="ledger-widget-title">Wallet Balances</div>
-            <div class="ledger-widget-subtitle">Grouped by currency with top active wallets</div>
+            <div class="ledger-widget-title">{{t "literal.ledger.wallet-balances"}}</div>
+            <div class="ledger-widget-subtitle">{{t "literal.ledger.grouped-by-currency-with-top-active-wallets"}}</div>
         </div>
         <button type="button" class="ledger-icon-button" {{on "click" (perform this.loadData)}}><FaIcon @icon="rotate" /></button>
     </div>
@@ -26,7 +26,7 @@
             </div>
             {{#if this.topWallets.length}}
                 <div class="mt-5 border-t border-gray-100 pt-4 dark:border-gray-700">
-                    <div class="mb-2 text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400">Top Wallets</div>
+                    <div class="mb-2 text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400">{{t "literal.ledger.top-wallets"}}</div>
                     <div class="ledger-animated-list space-y-2">
                         {{#each this.topWallets as |wallet index|}}
                             <div class="ledger-animated-row flex items-center gap-3 text-xs">
@@ -39,7 +39,7 @@
                 </div>
             {{/if}}
         {{else}}
-            <div class="ledger-widget-empty">No wallet data.</div>
+            <div class="ledger-widget-empty">{{t "literal.ledger.no-wallet-data"}}</div>
         {{/if}}
     </div>
 </div>

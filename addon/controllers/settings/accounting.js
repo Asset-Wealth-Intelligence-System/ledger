@@ -6,6 +6,7 @@ import { task } from 'ember-concurrency';
 import getCurrency from '@fleetbase/ember-ui/utils/get-currency';
 
 export default class SettingsAccountingController extends Controller {
+    @service intl;
     @service fetch;
     @service notifications;
     @service store;
@@ -29,20 +30,22 @@ export default class SettingsAccountingController extends Controller {
     // ── Static options ────────────────────────────────────────────────────────
     currencies = getCurrency();
 
-    fiscalYearMonthOptions = [
-        { label: 'January', value: 1 },
-        { label: 'February', value: 2 },
-        { label: 'March', value: 3 },
-        { label: 'April', value: 4 },
-        { label: 'May', value: 5 },
-        { label: 'June', value: 6 },
-        { label: 'July', value: 7 },
-        { label: 'August', value: 8 },
-        { label: 'September', value: 9 },
-        { label: 'October', value: 10 },
-        { label: 'November', value: 11 },
-        { label: 'December', value: 12 },
+    get fiscalYearMonthOptions() {
+        return [
+        { label: this.intl.t('literal.ledger.january'), value: 1 },
+        { label: this.intl.t('literal.ledger.february'), value: 2 },
+        { label: this.intl.t('literal.ledger.march'), value: 3 },
+        { label: this.intl.t('literal.ledger.april'), value: 4 },
+        { label: this.intl.t('literal.ledger.may'), value: 5 },
+        { label: this.intl.t('literal.ledger.june'), value: 6 },
+        { label: this.intl.t('literal.ledger.july'), value: 7 },
+        { label: this.intl.t('literal.ledger.august'), value: 8 },
+        { label: this.intl.t('literal.ledger.september'), value: 9 },
+        { label: this.intl.t('literal.ledger.october'), value: 10 },
+        { label: this.intl.t('literal.ledger.november'), value: 11 },
+        { label: this.intl.t('literal.ledger.december'), value: 12 },
     ];
+    }
 
     constructor() {
         super(...arguments);
@@ -133,7 +136,7 @@ export default class SettingsAccountingController extends Controller {
                 },
                 { namespace: 'ledger/int/v1' }
             );
-            this.notifications.success('Accounting settings saved.');
+            this.notifications.success(this.intl.t('literal.ledger.accounting-settings-saved'));
         } catch (error) {
             this.notifications.serverError(error);
         }

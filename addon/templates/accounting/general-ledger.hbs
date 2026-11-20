@@ -1,4 +1,4 @@
-<Layout::Section::Header @title="General Ledger" @actionsWrapperClass="flex flex-row items-center space-x-2">
+<Layout::Section::Header @title={{t "literal.ledger.general-ledger"}} @actionsWrapperClass="flex flex-row items-center space-x-2">
     <div class="general-ledger-filters flex flex-row items-center space-x-2">
         <DatePicker
             @value={{this.dateRange}}
@@ -6,7 +6,7 @@
             @onSelect={{this.onDateRangeChanged}}
             @autoClose={{true}}
             @buttons={{array "clear"}}
-            @placeholder="Select date range"
+            @placeholder={{t "literal.ledger.select-date-range"}}
             class="w-52"
         />
         <div class="fleetbase-model-select fleetbase-power-select ember-model-select w-40">
@@ -26,7 +26,7 @@
             @size="sm"
             @type="default"
             @icon={{if this.allExpanded "chevron-up" "chevron-down"}}
-            @helpText={{if this.allExpanded "Collapse All" "Expand All"}}
+            @helpText={{if this.allExpanded (t "literal.ledger.collapse-all") (t "literal.ledger.expand-all")}}
             {{on "click" this.toggleExpandAll}}
         />
     </div>
@@ -73,12 +73,12 @@
                                     <table class="w-full text-sm">
                                         <thead>
                                             <tr class="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-                                                <th class="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">Date</th>
-                                                <th class="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">Ref #</th>
-                                                <th class="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">Description</th>
-                                                <th class="text-right px-4 py-2 text-xs font-medium text-gray-500 uppercase">Debit</th>
-                                                <th class="text-right px-4 py-2 text-xs font-medium text-gray-500 uppercase">Credit</th>
-                                                <th class="text-right px-4 py-2 text-xs font-medium text-gray-500 uppercase">Balance</th>
+                                                <th class="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">{{t "literal.ledger.date"}}</th>
+                                                <th class="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">{{t "literal.ledger.ref"}}</th>
+                                                <th class="text-left px-4 py-2 text-xs font-medium text-gray-500 uppercase">{{t "literal.ledger.description"}}</th>
+                                                <th class="text-right px-4 py-2 text-xs font-medium text-gray-500 uppercase">{{t "literal.ledger.debit"}}</th>
+                                                <th class="text-right px-4 py-2 text-xs font-medium text-gray-500 uppercase">{{t "literal.ledger.credit"}}</th>
+                                                <th class="text-right px-4 py-2 text-xs font-medium text-gray-500 uppercase">{{t "literal.ledger.balance"}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -107,7 +107,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr class="border-t-2 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800">
-                                                <td colspan="3" class="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase">Totals</td>
+                                                <td colspan="3" class="px-4 py-2 text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase">{{t "literal.ledger.totals"}}</td>
                                                 <td class="px-4 py-2 text-right text-xs font-semibold text-gray-900 dark:text-white">
                                                     {{format-currency row.summary.total_debits acct.currency}}
                                                 </td>
@@ -134,8 +134,8 @@
         {{else}}
             <div class="flex flex-col items-center justify-center py-20 text-gray-400">
                 <FaIcon @icon="book-open" class="w-12 h-12 mb-3 opacity-30" />
-                <p class="text-sm font-medium">No accounts found.</p>
-                <p class="text-xs mt-1">Create accounts in the Chart of Accounts to see entries here.</p>
+                <p class="text-sm font-medium">{{t "literal.ledger.no-accounts-found"}}</p>
+                <p class="text-xs mt-1">{{t "literal.ledger.create-accounts-in-the-chart-of-accounts-to-see-b2dad"}}</p>
             </div>
         {{/if}}
     </div>

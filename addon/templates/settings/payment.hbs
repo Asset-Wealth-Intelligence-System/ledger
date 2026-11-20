@@ -1,9 +1,9 @@
-<Layout::Section::Header @title="Payment Settings">
+<Layout::Section::Header @title={{t "literal.ledger.payment-settings"}}>
     <Button
         @type="primary"
         @size="sm"
         @icon="save"
-        @text="Save Changes"
+        @text={{t "literal.ledger.save-changes"}}
         @onClick={{perform this.saveSettings}}
         @disabled={{this.saveSettings.isRunning}}
         @isLoading={{or this.saveSettings.isRunning this.getSettings.isRunning}}
@@ -15,14 +15,14 @@
         <div class="max-w-3xl my-10 mx-auto space-y-6">
 
             {{! ── Default Gateway ─────────────────────────────────────────────── }}
-            <ContentPanel @title="Default Payment Gateway" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Default Gateway" @helpText="The gateway used for all invoice payments unless overridden on the individual invoice. Only active gateways are listed.">
+            <ContentPanel @title={{t "literal.ledger.default-payment-gateway"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.ledger.default-gateway"}} @helpText={{t "literal.ledger.the-gateway-used-for-all-invoice-payments-unless-083cb"}}>
                     <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                         <PowerSelect
                             @options={{this.availableGateways}}
                             @selected={{this.selectedGateway}}
                             @onChange={{this.onSelectDefaultGateway}}
-                            @placeholder="Select a payment gateway"
+                            @placeholder={{t "literal.ledger.select-a-payment-gateway"}}
                             @triggerClass="form-select form-input"
                             @allowClear={{true}}
                             as |gateway|
@@ -35,7 +35,7 @@
                     </div>
                     {{#if this.selectedGateway}}
                         <div class="mt-1 text-[11px] text-gray-500">
-                            Selected:
+                            {{t "literal.ledger.selected-e8418"}}
                             <span class="font-medium">{{this.selectedGateway.name}}</span>
                             &mdash;
                             <span class="capitalize">{{this.selectedGateway.environment}}</span>
@@ -43,39 +43,39 @@
                     {{/if}}
                     {{#unless this.availableGateways.length}}
                         <div class="mt-1 text-[11px] text-amber-600">
-                            No active gateways found.
-                            <LinkTo @route="payments.gateways.new" class="underline">Add a gateway</LinkTo>
-                            to enable online payments.
+                            {{t "literal.ledger.no-active-gateways-found"}}
+                            <LinkTo @route="payments.gateways.new" class="underline">{{t "literal.ledger.add-a-gateway"}}</LinkTo>
+                            {{t "literal.ledger.to-enable-online-payments"}}
                         </div>
                     {{/unless}}
                 </InputGroup>
             </ContentPanel>
 
             {{! ── Payment Behaviour ───────────────────────────────────────────── }}
-            <ContentPanel @title="Payment Behaviour" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Allow Partial Payments">
+            <ContentPanel @title={{t "literal.ledger.payment-behaviour"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.ledger.allow-partial-payments"}}>
                     <Toggle
                         @isToggled={{this.allow_partial_payments}}
-                        @label="Allow customers to pay a portion of the invoice amount rather than the full balance."
+                        @label={{t "literal.ledger.allow-customers-to-pay-a-portion-of-the-invoice-5ee0d"}}
                         @onToggle={{fn (mut this.allow_partial_payments)}}
                     />
                 </InputGroup>
 
-                <InputGroup @name="Auto-Apply Wallet Credit">
+                <InputGroup @name={{t "literal.ledger.auto-apply-wallet-credit"}}>
                     <Toggle
                         @isToggled={{this.auto_apply_wallet_credit}}
-                        @label="Automatically apply available wallet balance toward invoice payments before charging the gateway."
+                        @label={{t "literal.ledger.automatically-apply-available-wallet-balance-tow-d269f"}}
                         @onToggle={{fn (mut this.auto_apply_wallet_credit)}}
                     />
                 </InputGroup>
             </ContentPanel>
 
             {{! ── Notifications ───────────────────────────────────────────────── }}
-            <ContentPanel @title="Payment Notifications" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Send Payment Receipt">
+            <ContentPanel @title={{t "literal.ledger.payment-notifications"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.ledger.send-payment-receipt"}}>
                     <Toggle
                         @isToggled={{this.send_payment_receipt}}
-                        @label="Email a payment receipt to the customer automatically after a successful payment."
+                        @label={{t "literal.ledger.email-a-payment-receipt-to-the-customer-automati-982cf"}}
                         @onToggle={{fn (mut this.send_payment_receipt)}}
                     />
                 </InputGroup>

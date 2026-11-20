@@ -1,7 +1,9 @@
 import ResourceActionService from '@fleetbase/ember-core/services/resource-action';
 import { action } from '@ember/object';
 
+import { inject as service } from '@ember/service';
 export default class InvoiceActionsService extends ResourceActionService {
+    @service intl;
     constructor() {
         super(...arguments);
         this.initialize('ledger-invoice', {
@@ -16,7 +18,8 @@ export default class InvoiceActionsService extends ResourceActionService {
         create: () => this.transitionTo('billing.invoices.index.new'),
     };
 
-    panel = {
+    get panel() {
+        return {
         create: (attributes = {}, options = {}) => {
             const invoice = this.createNewInstance(attributes);
             return this.resourceContextPanel.open({
@@ -46,6 +49,7 @@ export default class InvoiceActionsService extends ResourceActionService {
             });
         },
     };
+    }
 
     /**
      * Render the invoice using its assigned template and display the HTML
@@ -56,22 +60,22 @@ export default class InvoiceActionsService extends ResourceActionService {
      */
     @action async recordPayment(invoice, options = {}) {
         const modalOptions = {
-            title: `Record Payment — ${invoice.number}`,
-            acceptButtonText: 'Record Payment',
+            title: this.intl.t('literal.ledger.record-payment-a88e1', { number: invoice.number }),
+            acceptButtonText: this.intl.t('literal.ledger.record-payment'),
             acceptButtonIcon: 'check-circle',
             invoice,
             amount: invoice.balance ?? 0,
             paymentMethod: 'bank_transfer',
             reference: '',
             paymentMethodOptions: [
-                { label: 'Bank Transfer', value: 'bank_transfer' },
-                { label: 'Cash', value: 'cash' },
-                { label: 'Cheque', value: 'cheque' },
-                { label: 'Credit Card', value: 'credit_card' },
-                { label: 'Debit Card', value: 'debit_card' },
+                { label: this.intl.t('literal.ledger.bank-transfer'), value: 'bank_transfer' },
+                { label: this.intl.t('literal.ledger.cash'), value: 'cash' },
+                { label: this.intl.t('literal.ledger.cheque'), value: 'cheque' },
+                { label: this.intl.t('literal.ledger.credit-card'), value: 'credit_card' },
+                { label: this.intl.t('literal.ledger.debit-card'), value: 'debit_card' },
                 { label: 'PayPal', value: 'paypal' },
                 { label: 'Stripe', value: 'stripe' },
-                { label: 'Other', value: 'other' },
+                { label: this.intl.t('literal.ledger.other'), value: 'other' },
             ],
             setAmount: (centsValue) => {
                 modalOptions.amount = centsValue;
@@ -84,7 +88,7 @@ export default class InvoiceActionsService extends ResourceActionService {
             },
             confirm: async (modal) => {
                 if (!modalOptions.amount || modalOptions.amount <= 0) {
-                    this.notifications.warning('Please enter a valid payment amount greater than zero.');
+                    this.notifications.warning(this.intl.t('literal.ledger.please-enter-a-valid-payment-amount-greater-than-1997c'));
                     return;
                 }
                 modal.startLoading();
@@ -98,7 +102,7 @@ export default class InvoiceActionsService extends ResourceActionService {
                         },
                         { namespace: 'ledger/int/v1' }
                     );
-                    this.notifications.success('Payment recorded successfully.');
+                    this.notifications.success(this.intl.t('literal.ledger.payment-recorded-successfully'));
                     await invoice.reload();
                     modal.done();
                 } catch (error) {

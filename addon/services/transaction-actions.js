@@ -13,7 +13,8 @@ export default class TransactionActionsService extends ResourceActionService {
         view: (transaction) => this.transitionTo('payments.transactions.index.details', transaction),
     };
 
-    panel = {
+    get panel() {
+        return {
         view: (transaction, options = {}) => {
             return this.resourceContextPanel.open({
                 transaction,
@@ -22,4 +23,5 @@ export default class TransactionActionsService extends ResourceActionService {
             });
         },
     };
+    }
 }

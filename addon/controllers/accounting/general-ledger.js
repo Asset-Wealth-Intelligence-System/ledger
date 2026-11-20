@@ -5,16 +5,21 @@ import { inject as service } from '@ember/service';
 import { isArray } from '@ember/array';
 import { task } from 'ember-concurrency';
 
-const ACCOUNT_TYPES = [
-    { label: 'All Types', value: null },
-    { label: 'Asset', value: 'asset' },
-    { label: 'Liability', value: 'liability' },
-    { label: 'Equity', value: 'equity' },
-    { label: 'Revenue', value: 'revenue' },
-    { label: 'Expense', value: 'expense' },
-];
 
 export default class AccountingGeneralLedgerController extends Controller {
+    @service intl;
+
+    get ACCOUNT_TYPES() {
+        return [
+        { label: this.intl.t('literal.ledger.all-types'), value: null },
+        { label: this.intl.t('literal.ledger.asset'), value: 'asset' },
+        { label: this.intl.t('literal.ledger.liability'), value: 'liability' },
+        { label: this.intl.t('literal.ledger.equity'), value: 'equity' },
+        { label: this.intl.t('literal.ledger.revenue'), value: 'revenue' },
+        { label: this.intl.t('literal.ledger.expense'), value: 'expense' },
+    ];
+    }
+
     @service fetch;
 
     @tracked accounts = [];
@@ -30,11 +35,11 @@ export default class AccountingGeneralLedgerController extends Controller {
     @tracked expandedMap = {};
 
     get accountTypes() {
-        return ACCOUNT_TYPES;
+        return this.ACCOUNT_TYPES;
     }
 
     get selectedType() {
-        return ACCOUNT_TYPES.find((t) => t.value === this.type) ?? ACCOUNT_TYPES[0];
+        return this.ACCOUNT_TYPES.find((t) => t.value === this.type) ?? this.ACCOUNT_TYPES[0];
     }
 
     get allExpanded() {

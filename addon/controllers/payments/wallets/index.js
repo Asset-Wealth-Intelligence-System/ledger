@@ -88,10 +88,10 @@ export default class PaymentsWalletsIndexController extends Controller {
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
                 filterOptions: [
-                    { label: 'Company', value: 'company' },
-                    { label: 'Driver', value: 'driver' },
-                    { label: 'Customer', value: 'customer' },
-                    { label: 'User', value: 'user' },
+                    { label: this.intl.t('literal.ledger.company'), value: 'company' },
+                    { label: this.intl.t('literal.ledger.driver'), value: 'driver' },
+                    { label: this.intl.t('literal.ledger.customer'), value: 'customer' },
+                    { label: this.intl.t('literal.ledger.user'), value: 'user' },
                 ],
             },
             {
@@ -127,10 +127,10 @@ export default class PaymentsWalletsIndexController extends Controller {
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
                 filterOptions: [
-                    { label: 'Active', value: 'active' },
-                    { label: 'Inactive', value: 'inactive' },
-                    { label: 'Frozen', value: 'frozen' },
-                    { label: 'Suspended', value: 'suspended' },
+                    { label: this.intl.t('literal.ledger.active'), value: 'active' },
+                    { label: this.intl.t('literal.ledger.inactive'), value: 'inactive' },
+                    { label: this.intl.t('literal.ledger.frozen'), value: 'frozen' },
+                    { label: this.intl.t('literal.ledger.suspended'), value: 'suspended' },
                 ],
             },
             {
@@ -179,8 +179,8 @@ export default class PaymentsWalletsIndexController extends Controller {
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
                 filterOptions: [
-                    { label: 'Yes', value: 'true' },
-                    { label: 'No', value: 'false' },
+                    { label: this.intl.t('literal.ledger.yes'), value: 'true' },
+                    { label: this.intl.t('literal.ledger.no'), value: 'false' },
                 ],
             },
             {

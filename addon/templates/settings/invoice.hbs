@@ -1,9 +1,9 @@
-<Layout::Section::Header @title="Invoice Settings">
+<Layout::Section::Header @title={{t "literal.ledger.invoice-settings"}}>
     <Button
         @type="primary"
         @size="sm"
         @icon="save"
-        @text="Save Changes"
+        @text={{t "literal.ledger.save-changes"}}
         @onClick={{perform this.saveSettings}}
         @disabled={{this.saveSettings.isRunning}}
         @isLoading={{or this.saveSettings.isRunning this.getSettings.isRunning}}
@@ -15,15 +15,15 @@
         <div class="max-w-3xl my-10 mx-auto space-y-6">
 
             {{! ── Numbering ──────────────────────────────────────────────────── }}
-            <ContentPanel @title="Invoice Numbering" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Invoice Number Prefix" @helpText="This prefix is prepended to every new invoice number, e.g. 'INV-000001'.">
+            <ContentPanel @title={{t "literal.ledger.invoice-numbering"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.ledger.invoice-number-prefix"}} @helpText={{t "literal.ledger.this-prefix-is-prepended-to-every-new-invoice-nu-564ab"}}>
                     <Input @value={{this.invoice_prefix}} @type="text" class="w-full form-input" placeholder="INV" />
                 </InputGroup>
             </ContentPanel>
 
             {{! ── Currency & Payment Terms ────────────────────────────────────── }}
-            <ContentPanel @title="Currency & Payment Terms" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Default Currency" @helpText="The currency applied to new invoices unless overridden on the invoice itself.">
+            <ContentPanel @title={{t "literal.ledger.currency-payment-terms"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.ledger.default-currency"}} @helpText={{t "literal.ledger.the-currency-applied-to-new-invoices-unless-over-6168b"}}>
                     <CurrencySelect
                         @currency={{this.effectiveCurrency}}
                         @currencyData={{this.selectedCurrency}}
@@ -37,13 +37,13 @@
                     {{/unless}}
                 </InputGroup>
 
-                <InputGroup @name="Default Payment Terms" @helpText="Number of days after the invoice date that payment is due.">
+                <InputGroup @name={{t "literal.ledger.default-payment-terms"}} @helpText={{t "literal.ledger.number-of-days-after-the-invoice-date-that-payme-1b011"}}>
                     <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                         <PowerSelect
                             @options={{this.paymentTermsOptions}}
                             @selected={{find-by "value" this.payment_terms_days this.paymentTermsOptions}}
                             @onChange={{this.onSelectPaymentTerms}}
-                            @placeholder="Select payment terms"
+                            @placeholder={{t "literal.ledger.select-payment-terms"}}
                             @triggerClass="form-select form-input"
                             as |opt|
                         >
@@ -54,28 +54,28 @@
             </ContentPanel>
 
             {{! ── Default Text ─────────────────────────────────────────────────── }}
-            <ContentPanel @title="Default Invoice Text" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Default Notes" @helpText="These notes appear at the bottom of every new invoice. You can override them per invoice.">
-                    <Textarea @value={{this.default_notes}} class="w-full form-input" rows="3" placeholder="e.g. Thank you for your business!" />
+            <ContentPanel @title={{t "literal.ledger.default-invoice-text"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.ledger.default-notes"}} @helpText={{t "literal.ledger.these-notes-appear-at-the-bottom-of-every-new-in-050fd"}}>
+                    <Textarea @value={{this.default_notes}} class="w-full form-input" rows="3" placeholder={{t "literal.ledger.e-g-thank-you-for-your-business"}} />
                 </InputGroup>
 
-                <InputGroup @name="Default Terms & Conditions" @helpText="Standard terms pre-filled on every new invoice.">
-                    <Textarea @value={{this.default_terms}} class="w-full form-input" rows="3" placeholder="e.g. Payment is due within 30 days of the invoice date." />
+                <InputGroup @name={{t "literal.ledger.default-terms-conditions"}} @helpText={{t "literal.ledger.standard-terms-pre-filled-on-every-new-invoice"}}>
+                    <Textarea @value={{this.default_terms}} class="w-full form-input" rows="3" placeholder={{t "literal.ledger.e-g-payment-is-due-within-30-days-of-the-invoice-42361"}} />
                 </InputGroup>
             </ContentPanel>
 
             {{! ── Default Template ─────────────────────────────────────────────── }}
-            <ContentPanel @title="Default Invoice Template" @open={{true}} @wrapperClass="bordered-classic">
+            <ContentPanel @title={{t "literal.ledger.default-invoice-template"}} @open={{true}} @wrapperClass="bordered-classic">
                 <InputGroup
-                    @name="Default Template"
-                    @helpText="The invoice template applied to all new invoices, including those auto-generated from Fleet-Ops orders. Leave blank to use the system default."
+                    @name={{t "literal.ledger.default-template"}}
+                    @helpText={{t "literal.ledger.the-invoice-template-applied-to-all-new-invoices-621a0"}}
                 >
                     <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                         <PowerSelect
                             @options={{this.availableTemplates}}
                             @selected={{this.selectedTemplate}}
                             @onChange={{this.onSelectDefaultTemplate}}
-                            @placeholder="Select an invoice template"
+                            @placeholder={{t "literal.ledger.select-an-invoice-template"}}
                             @triggerClass="form-select form-input"
                             @allowClear={{true}}
                             as |template|
@@ -85,26 +85,26 @@
                     </div>
                     {{#if this.selectedTemplate}}
                         <div class="mt-1 text-[11px] text-gray-500">
-                            Selected:
+                            {{t "literal.ledger.selected-e8418"}}
                             <span class="font-medium">{{this.selectedTemplate.name}}</span>
                         </div>
                     {{/if}}
                     {{#unless this.availableTemplates.length}}
                         <div class="mt-1 text-[11px] text-amber-600">
-                            No invoice templates found.
-                            <LinkTo @route="billing.invoice-templates.index.new" class="underline">Create a template</LinkTo>
-                            to enable custom invoice branding.
+                            {{t "literal.ledger.no-invoice-templates-found"}}
+                            <LinkTo @route="billing.invoice-templates.index.new" class="underline">{{t "literal.ledger.create-a-template"}}</LinkTo>
+                            {{t "literal.ledger.to-enable-custom-invoice-branding"}}
                         </div>
                     {{/unless}}
                 </InputGroup>
             </ContentPanel>
 
             {{! ── Automation ───────────────────────────────────────────────────── }}
-            <ContentPanel @title="Automation" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Auto-Send on Creation">
+            <ContentPanel @title={{t "literal.ledger.automation"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.ledger.auto-send-on-creation"}}>
                     <Toggle
                         @isToggled={{this.auto_send_on_creation}}
-                        @label="Automatically email the invoice to the customer when it is created."
+                        @label={{t "literal.ledger.automatically-email-the-invoice-to-the-customer-43201"}}
                         @onToggle={{fn (mut this.auto_send_on_creation)}}
                     />
                 </InputGroup>

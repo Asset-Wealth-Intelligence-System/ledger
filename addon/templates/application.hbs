@@ -1,5 +1,5 @@
 <EmberWormhole @to="sidebar-menu-items">
-    <Layout::Sidebar::Navigator @items={{this.navigationItems}} @searchPlaceholder="Search Ledger..." @searchProvider={{this.searchNavigation}} />
+    <Layout::Sidebar::Navigator @items={{this.navigationItems}} @searchPlaceholder={{t "literal.ledger.search-ledger"}} @searchProvider={{this.searchNavigation}} />
 </EmberWormhole>
 <Layout::Section::Container>
     {{outlet}}

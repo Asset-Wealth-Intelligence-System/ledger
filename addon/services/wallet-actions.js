@@ -13,7 +13,8 @@ export default class WalletActionsService extends ResourceActionService {
         view: (wallet) => this.transitionTo('payments.wallets.index.details', wallet),
     };
 
-    panel = {
+    get panel() {
+        return {
         view: (wallet, options = {}) => {
             return this.resourceContextPanel.open({
                 wallet,
@@ -25,4 +26,5 @@ export default class WalletActionsService extends ResourceActionService {
             });
         },
     };
+    }
 }

@@ -19,6 +19,7 @@ import { task } from 'ember-concurrency';
  *   POST {API.host}/ledger/public/invoices/<public_id>/pay
  */
 export default class CustomerInvoiceComponent extends Component {
+    @service intl;
     @service urlSearchParams;
     @service notifications;
     @service fetch;
@@ -115,14 +116,14 @@ export default class CustomerInvoiceComponent extends Component {
         // Detect Stripe redirect-back
         const paymentParam = this.urlSearchParams.get('payment');
         if (paymentParam === 'success') {
-            this.successMessage = 'Your payment was completed successfully. Thank you!';
+            this.successMessage = this.intl.t('literal.ledger.your-payment-was-completed-successfully-thank-yo-97a05');
             this.showPaymentForm = false;
         } else if (paymentParam === 'cancelled') {
-            this.error = 'Payment was cancelled. You can try again below.';
+            this.error = this.intl.t('literal.ledger.payment-was-cancelled-you-can-try-again-below');
         }
 
         if (!id) {
-            this.error = 'No invoice identifier provided. Please check the link and try again.';
+            this.error = this.intl.t('literal.ledger.no-invoice-identifier-provided-please-check-the-b950f');
             return;
         }
 
@@ -145,13 +146,13 @@ export default class CustomerInvoiceComponent extends Component {
         } catch (err) {
             const status = err?.status ?? err?.response?.status;
             if (status === 404) {
-                this.error = 'Invoice not found. Please check the link and try again.';
+                this.error = this.intl.t('literal.ledger.invoice-not-found-please-check-the-link-and-try-d74fd');
             } else if (status === 403) {
                 // The invoice exists but is in draft status and not yet available
                 // to the customer. Show the server-provided message if present.
-                this.error = err?.payload?.error ?? err?.message ?? 'This invoice is not yet available. Please contact the sender.';
+                this.error = err?.payload?.error ?? err?.message ?? this.intl.t('literal.ledger.this-invoice-is-not-yet-available-please-contact-ee206');
             } else {
-                this.error = err?.message ?? 'Failed to load invoice. Please try again later.';
+                this.error = err?.message ?? this.intl.t('literal.ledger.failed-to-load-invoice-please-try-again-later');
             }
         }
     }
@@ -170,7 +171,7 @@ export default class CustomerInvoiceComponent extends Component {
         this.error = null;
 
         if (!this.selectedGatewayId) {
-            this.error = 'Online payment is not available for this invoice.';
+            this.error = this.intl.t('literal.ledger.online-payment-is-not-available-for-this-invoice');
             return;
         }
 
@@ -191,30 +192,30 @@ export default class CustomerInvoiceComponent extends Component {
             if (this.isTalerUri(paymentUrl)) {
                 this.talerPaymentUri = paymentUrl;
                 this.isRedirectingToCheckout = false;
-                this.pendingMessage = data?.message ?? 'Payment started. Open your GNU Taler wallet to complete it.';
+                this.pendingMessage = data?.message ?? this.intl.t('literal.ledger.payment-started-open-your-gnu-taler-wallet-to-co-d02bc');
                 return;
             }
 
             // Redirect payment sessions — Stripe Checkout, QPay app link, etc.
             if (paymentUrl) {
                 this.isRedirectingToCheckout = true;
-                this.pendingMessage = data?.message ?? 'Redirecting to payment provider...';
+                this.pendingMessage = data?.message ?? this.intl.t('literal.ledger.redirecting-to-payment-provider');
                 window.location.href = paymentUrl;
                 return;
             }
 
             if (data?.payment_status === 'pending') {
-                this.pendingMessage = data?.message ?? 'Payment started. Complete it in your payment app, then refresh this invoice.';
+                this.pendingMessage = data?.message ?? this.intl.t('literal.ledger.payment-started-complete-it-in-your-payment-app-74039');
                 this.showPaymentForm = false;
                 return;
             }
 
             // Immediate payment recorded (cash, bank transfer, etc.)
             this.invoice = data?.invoice ?? data;
-            this.successMessage = 'Your payment has been recorded successfully. Thank you!';
+            this.successMessage = this.intl.t('literal.ledger.your-payment-has-been-recorded-successfully-than-7693e');
             this.showPaymentForm = false;
         } catch (err) {
-            this.error = err?.message ?? 'Payment failed. Please try again.';
+            this.error = err?.message ?? this.intl.t('literal.ledger.payment-failed-please-try-again');
         }
     }
 

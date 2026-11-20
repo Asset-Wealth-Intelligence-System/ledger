@@ -1,8 +1,10 @@
 import Controller from '@ember/controller';
 
+import { inject as service } from '@ember/service';
 export default class BillingTransactionsIndexDetailsController extends Controller {
+    @service intl;
     get tabs() {
-        return [{ label: 'Details', route: 'console.ledger.billing.transactions.index.details.index' }];
+        return [{ label: this.intl.t('literal.ledger.details'), route: 'console.ledger.billing.transactions.index.details.index' }];
     }
 
     get actionButtons() {

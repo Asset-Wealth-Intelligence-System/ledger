@@ -3,34 +3,38 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
-const DRIVER_COPY = {
-    taler: {
-        name: 'GNU Taler',
-        icon: 'wallet',
-        type: 'Wallet payment',
-        description: 'Privacy-preserving wallet payments, QR checkout, webhook confirmation, refunds, and settlement verification.',
-    },
-    stripe: {
-        name: 'Stripe',
-        icon: 'credit-card',
-        type: 'Cards and wallets',
-        description: 'Card and digital wallet processing with webhook confirmation and refund support.',
-    },
-    cash: {
-        name: 'Cash',
-        icon: 'money-bill-wave',
-        type: 'Manual payment',
-        description: 'Record offline or in-person payments without external webhook provisioning.',
-    },
-    qpay: {
-        name: 'QPay',
-        icon: 'qrcode',
-        type: 'Regional payment',
-        description: 'Regional gateway support for QR and local payment collection flows.',
-    },
-};
 
 export default class GatewayHubComponent extends Component {
+    get DRIVER_COPY() {
+        return {
+        taler: {
+            name: 'GNU Taler',
+            icon: 'wallet',
+            type: this.intl.t('literal.ledger.wallet-payment'),
+            description: this.intl.t('literal.ledger.privacy-preserving-wallet-payments-qr-checkout-w-5e7ca'),
+        },
+        stripe: {
+            name: 'Stripe',
+            icon: 'credit-card',
+            type: this.intl.t('literal.ledger.cards-and-wallets'),
+            description: this.intl.t('literal.ledger.card-and-digital-wallet-processing-with-webhook-a6c0e'),
+        },
+        cash: {
+            name: this.intl.t('literal.ledger.cash'),
+            icon: 'money-bill-wave',
+            type: this.intl.t('literal.ledger.manual-payment'),
+            description: this.intl.t('literal.ledger.record-offline-or-in-person-payments-without-ext-7e9b4'),
+        },
+        qpay: {
+            name: 'QPay',
+            icon: 'qrcode',
+            type: this.intl.t('literal.ledger.regional-payment'),
+            description: this.intl.t('literal.ledger.regional-gateway-support-for-qr-and-local-paymen-119b7'),
+        },
+    };
+    }
+
+    @service intl;
     @service gatewayActions;
     @tracked table;
 
@@ -57,7 +61,7 @@ export default class GatewayHubComponent extends Component {
 
         return ['taler', 'stripe', 'cash', 'qpay'].map((code) => {
             const manifest = this.drivers.find((driver) => driver.code === code) ?? {};
-            const copy = DRIVER_COPY[code];
+            const copy = this.DRIVER_COPY[code];
             const configured = configuredByDriver.get(code) ?? [];
             const active = configured.filter((gateway) => gateway.status === 'active');
 
@@ -87,30 +91,30 @@ export default class GatewayHubComponent extends Component {
     get statusTiles() {
         return [
             {
-                label: 'Active gateways',
+                label: this.intl.t('literal.ledger.active-gateways'),
                 value: this.summary.active_gateways ?? 0,
-                caption: 'Ready to collect payments',
+                caption: this.intl.t('literal.ledger.ready-to-collect-payments'),
                 icon: 'plug',
                 accentClass: Number(this.summary.active_gateways ?? 0) > 0 ? 'ledger-gateway-kpi-accent-green' : 'ledger-gateway-kpi-accent-blue',
             },
             {
-                label: 'Live ready',
+                label: this.intl.t('literal.ledger.live-ready'),
                 value: this.summary.live_gateways ?? 0,
-                caption: 'Production connections',
+                caption: this.intl.t('literal.ledger.production-connections'),
                 icon: 'bolt',
                 accentClass: Number(this.summary.live_gateways ?? 0) > 0 ? 'ledger-gateway-kpi-accent-blue' : 'ledger-gateway-kpi-accent-slate',
             },
             {
-                label: 'Webhook issues',
+                label: this.intl.t('literal.ledger.webhook-issues'),
                 value: this.warningCount,
-                caption: this.warningCount > 0 ? 'Need provisioning review' : 'No open warnings',
+                caption: this.warningCount > 0 ? this.intl.t('literal.ledger.need-provisioning-review') : this.intl.t('literal.ledger.no-open-warnings'),
                 icon: 'link',
                 accentClass: this.warningCount > 0 ? 'ledger-gateway-kpi-accent-amber' : 'ledger-gateway-kpi-accent-green',
             },
             {
-                label: 'Sandbox',
+                label: this.intl.t('literal.ledger.sandbox'),
                 value: this.summary.sandbox_gateways ?? 0,
-                caption: 'Testing connections',
+                caption: this.intl.t('literal.ledger.testing-connections'),
                 icon: 'flask',
                 accentClass: Number(this.summary.sandbox_gateways ?? 0) > 0 ? 'ledger-gateway-kpi-accent-amber' : 'ledger-gateway-kpi-accent-slate',
             },

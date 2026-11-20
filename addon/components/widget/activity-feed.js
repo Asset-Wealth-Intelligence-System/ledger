@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class WidgetActivityFeedComponent extends Component {
+    @service intl;
     @service fetch;
     @service currentUser;
     @tracked entries = [];
@@ -25,7 +26,7 @@ export default class WidgetActivityFeedComponent extends Component {
             this.error = null;
         } catch (error) {
             this.entries = [];
-            this.error = error?.message ?? 'Unable to load activity';
+            this.error = error?.message ?? this.intl.t('literal.ledger.unable-to-load-activity');
         }
     }
 }
